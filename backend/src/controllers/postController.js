@@ -78,12 +78,6 @@ export async function listArchivedPosts(req, res) {
 
 export async function createPost(req, res) {
   const { caption, imageUrl, mediaType = 'image', location, visibility = 'public', tags = [] } = req.body;
-  if (isLocalFallbackEnabled()) {
-    const post = createMemoryPost({ caption, imageUrl, mediaType, location, visibility, author: req.user, tags });
-    broadcast({ type: 'post:created', postId: post._id, caption: post.caption, username: req.user.username });
-    return res.status(201).json({ post, warning: 'Saved in local fallback storage.' });
-  }
-
   try {
     const post = await withTimeout(
       Post.create({ caption, imageUrl, mediaType, location, visibility, author: req.user._id, tags: [] }),

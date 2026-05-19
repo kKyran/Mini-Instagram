@@ -125,12 +125,6 @@ export async function createStory(req, res) {
     return res.status(400).json({ message: 'Story media is required.' });
   }
 
-  if (isLocalFallbackEnabled()) {
-    const story = createMemoryStory({ mediaUrl, mediaType, overlays, author: req.user });
-    broadcast({ type: 'story:created', storyId: story._id, username: req.user.username, story });
-    return res.status(201).json({ story, warning: 'Saved in local fallback storage.' });
-  }
-
   try {
     const story = await withTimeout(
       Story.create({
