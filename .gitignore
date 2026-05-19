@@ -1,0 +1,8 @@
+node_modules
+.next
+coverage
+.env
+.env.local
+uploads
+backend/data/*.json
+*.log
