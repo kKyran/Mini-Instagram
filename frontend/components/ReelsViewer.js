@@ -2,10 +2,9 @@
 
 import { Bookmark, Heart, MessageCircle, Send, Volume2, VolumeX, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import { apiUrl, wsUrl } from '../lib/api-config';
 import { Avatar } from './Avatar';
 import { useAuth } from './AuthProvider';
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 
 function isVideoPost(post) {
   return post?.mediaType === 'video' || (typeof post?.imageUrl === 'string' && post.imageUrl.startsWith('data:video/'));
@@ -56,7 +55,6 @@ export function ReelsViewer({ initialPosts = [] }) {
 
   useEffect(() => {
     if (!token) return undefined;
-    const wsUrl = process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:4000';
     const ws = new WebSocket(`${wsUrl}?token=${token}`);
     ws.onmessage = (event) => {
       const payload = JSON.parse(event.data);

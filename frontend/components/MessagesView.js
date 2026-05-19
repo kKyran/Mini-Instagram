@@ -2,10 +2,9 @@
 
 import { ArrowLeft, Info, Mic, Phone, Search, Send, Video } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
+import { apiUrl } from '../lib/api-config';
 import { Avatar } from './Avatar';
 import { useAuth } from './AuthProvider';
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 
 function getMessageContact(message, currentUser) {
   return message.sender.id === currentUser?.id ? message.receiver : message.sender;

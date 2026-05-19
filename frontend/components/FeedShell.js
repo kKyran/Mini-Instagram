@@ -13,8 +13,7 @@ import { ReelsViewer } from './ReelsViewer';
 import { SideNav } from './SideNav';
 import { StoryComposer } from './StoryComposer';
 import { StoryViewer } from './StoryViewer';
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+import { apiUrl, wsUrl } from '../lib/api-config';
 
 function getAuthorKey(author) {
   return author?._id || author?.id || author?.username;
@@ -254,7 +253,6 @@ export function FeedShell({ initialPosts, initialView = 'home' }) {
     let ws;
     if (!token) return undefined;
 
-    const wsUrl = process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:4000';
     ws = new WebSocket(`${wsUrl}?token=${token}`);
     ws.onmessage = (event) => {
       const payload = JSON.parse(event.data);
@@ -307,7 +305,6 @@ export function FeedShell({ initialPosts, initialView = 'home' }) {
     let ws;
     if (!token || !user) return undefined;
 
-    const wsUrl = process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:4000';
     ws = new WebSocket(`${wsUrl}?token=${token}`);
     ws.onmessage = (event) => {
       const payload = JSON.parse(event.data);

@@ -1,10 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { apiUrl, wsUrl } from '../lib/api-config';
 import { useAuth } from './AuthProvider';
 import { PostCard } from './PostCard';
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 
 function getAuthorId(post) {
   return post?.author?._id || post?.author?.id;
@@ -39,7 +38,6 @@ export function Feed({ initialPosts }) {
     let ws;
     const wsTimer = setTimeout(() => {
       if (!token) return;
-      const wsUrl = process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:4000';
       ws = new WebSocket(`${wsUrl}?token=${token}`);
       ws.onmessage = (event) => {
         const payload = JSON.parse(event.data);

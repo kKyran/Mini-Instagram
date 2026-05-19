@@ -1,9 +1,9 @@
 'use client';
 
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { apiUrl, wsUrl } from '../lib/api-config';
 
 const AuthContext = createContext(null);
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(null);
@@ -125,7 +125,6 @@ export function AuthProvider({ children }) {
     if (!token || !user) return undefined;
     let ws;
     const wsTimer = setTimeout(() => {
-      const wsUrl = process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:4000';
       ws = new WebSocket(`${wsUrl}?token=${token}`);
       ws.onmessage = (event) => {
         const payload = JSON.parse(event.data);

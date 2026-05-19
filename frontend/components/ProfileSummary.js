@@ -1,10 +1,9 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
+import { apiUrl } from '../lib/api-config';
 import { Avatar } from './Avatar';
 import { useAuth } from './AuthProvider';
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 
 function countItems(value) {
   return Array.isArray(value) ? value.length : 0;

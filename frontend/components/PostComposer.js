@@ -2,10 +2,9 @@
 
 import { ImagePlus, Images, X } from 'lucide-react';
 import { useState } from 'react';
+import { apiUrl } from '../lib/api-config';
 import { UploadButton, uploadButtonAppearance, uploadedFileUrl, uploadHeaders } from '../lib/uploadthing';
 import { useAuth } from './AuthProvider';
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 
 export function PostComposer({ onDone }) {
   const { token, user } = useAuth();

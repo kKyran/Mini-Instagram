@@ -2,10 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { Archive, Bookmark, Heart, MessageCircle, MoreVertical, Send, Trash2 } from 'lucide-react';
+import { apiUrl } from '../lib/api-config';
 import { Avatar } from './Avatar';
 import { useAuth } from './AuthProvider';
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 
 function getAuthorId(post) {
   return post?.author?._id || post?.author?.id;

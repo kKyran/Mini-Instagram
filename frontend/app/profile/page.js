@@ -6,9 +6,8 @@ import { Avatar } from '../../components/Avatar';
 import { useAuth } from '../../components/AuthProvider';
 import { ProfileSummary } from '../../components/ProfileSummary';
 import { SideNav } from '../../components/SideNav';
+import { apiUrl } from '../../lib/api-config';
 import { UploadButton, uploadButtonAppearance, uploadedFileUrl, uploadHeaders } from '../../lib/uploadthing';
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 
 function getAuthorId(post) {
   return post?.author?._id || post?.author?.id;

@@ -1,8 +1,7 @@
 'use client';
 
 import { generateUploadButton } from '@uploadthing/react';
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+import { apiUrl } from './api-config';
 
 export const UploadButton = generateUploadButton({
   url: `${apiUrl}/api/uploadthing`

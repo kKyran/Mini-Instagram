@@ -13,7 +13,7 @@ import { isDbConnected } from './config/db.js';
 import { isUploadThingConfigured, uploadRouter } from './uploadthing.js';
 
 function getAllowedOrigins() {
-  const configuredOrigins = (process.env.CLIENT_ORIGIN || 'http://localhost:3000')
+  const configuredOrigins = (process.env.CLIENT_ORIGIN || 'http://localhost:3000,https://mini-instagram-frontend-eight.vercel.app')
     .split(',')
     .map((origin) => origin.trim())
     .filter(Boolean);

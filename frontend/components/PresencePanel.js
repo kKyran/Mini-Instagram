@@ -2,6 +2,7 @@
 
 import { CalendarDays, Edit, MessageCircle, Search, Users } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { wsUrl } from '../lib/api-config';
 import { Avatar } from './Avatar';
 
 export function PresencePanel() {
@@ -9,7 +10,6 @@ export function PresencePanel() {
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem('mini-instagram-auth') || '{}').token;
-    const wsUrl = process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:4000';
     const ws = new WebSocket(`${wsUrl}?token=${token || ''}`);
     ws.onmessage = (event) => {
       const payload = JSON.parse(event.data);

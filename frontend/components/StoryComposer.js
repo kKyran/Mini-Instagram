@@ -2,10 +2,9 @@
 
 import { AtSign, ImagePlus, Move, Sticker, Type, X } from 'lucide-react';
 import { useRef, useState } from 'react';
+import { apiUrl } from '../lib/api-config';
 import { UploadButton, uploadButtonAppearance, uploadedFileUrl, uploadHeaders } from '../lib/uploadthing';
 import { useAuth } from './AuthProvider';
-
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 const stickerOptions = ['MINI', 'WOW', 'LIVE', 'NEW', '*'];
 
 function clamp(value) {
