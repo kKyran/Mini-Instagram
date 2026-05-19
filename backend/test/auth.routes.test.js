@@ -6,6 +6,16 @@ import { signToken } from '../src/utils/auth.js';
 const app = createApp();
 
 describe('auth routes', () => {
+  test('allows CORS preflight from Vercel frontend', async () => {
+    const res = await request(app)
+      .options('/api/auth/login')
+      .set('Origin', 'https://mini-instagram-frontend-eight.vercel.app')
+      .set('Access-Control-Request-Method', 'POST');
+
+    expect(res.status).toBe(204);
+    expect(res.headers['access-control-allow-origin']).toBe('https://mini-instagram-frontend-eight.vercel.app');
+  });
+
   test('registers a new user', async () => {
     const res = await request(app).post('/api/auth/register').send({ username: 'newbie', email: 'new@example.com', password: 'secret123' });
     expect(res.status).toBe(201);

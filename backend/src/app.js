@@ -12,16 +12,22 @@ import { userRoutes } from './routes/userRoutes.js';
 import { isDbConnected } from './config/db.js';
 import { isUploadThingConfigured, uploadRouter } from './uploadthing.js';
 
+const defaultAllowedOrigins = [
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
+  'http://192.168.56.1:3000',
+  'https://mini-instagram-frontend-eight.vercel.app'
+];
+
 function getAllowedOrigins() {
-  const configuredOrigins = (process.env.CLIENT_ORIGIN || 'http://localhost:3000,https://mini-instagram-frontend-eight.vercel.app')
+  const configuredOrigins = (process.env.CLIENT_ORIGIN || '')
     .split(',')
     .map((origin) => origin.trim())
     .filter(Boolean);
 
   return new Set([
+    ...defaultAllowedOrigins,
     ...configuredOrigins,
-    'http://127.0.0.1:3000',
-    'http://192.168.56.1:3000'
   ]);
 }
 
@@ -35,12 +41,24 @@ function isLocalDevOrigin(origin) {
   }
 }
 
+function isAllowedVercelOrigin(origin) {
+  if (!origin) return false;
+  try {
+    const { hostname, protocol } = new URL(origin);
+    return protocol === 'https:' && hostname.endsWith('.vercel.app');
+  } catch {
+    return false;
+  }
+}
+
 export function createApp() {
   const app = express();
   const allowedOrigins = getAllowedOrigins();
   app.use(cors({
     origin(origin, callback) {
-      if (!origin || allowedOrigins.has(origin) || isLocalDevOrigin(origin)) return callback(null, true);
+      if (!origin || allowedOrigins.has(origin) || isLocalDevOrigin(origin) || isAllowedVercelOrigin(origin)) {
+        return callback(null, true);
+      }
       return callback(new Error('Not allowed by CORS'));
     }
   }));
